@@ -36,7 +36,7 @@ function initialPrompt() {
    console.log("Let's play some scrabble!");
    let word = input.question('Please enter a word\t');
    points = oldScrabbleScorer(word);
-
+   console.log(points)
 return points;
 };
 
