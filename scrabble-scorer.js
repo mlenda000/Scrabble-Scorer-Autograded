@@ -90,7 +90,7 @@ let scrabbleScorer = function(word){
 	return totalScore;
 };
 
-const scoringAlgorithms = [{'Name':'Simple Score','Description':'Each letter is worth 1 point.','Score Function':ss = function(usrInp){return simpleScorer(usrInp)}}, {'Name': 'Bonus Vowels','Description':'Vowels are 3 pts, consonants are 1 pt.','Score Function':vbs = function(usrInp){return vowelBonusScorer(usrInp)}},{'Name':'Scrabble','Description':'The traditional scoring algorithm.','Score Function': nps = function(usrInp){return scrabbleScorer(usrInp)}}]
+const scoringAlgorithms = [{'Name':'Simple Score','Description':'Each letter is worth 1 point.','scorerFunction':ss = function(usrInp){return simpleScorer(usrInp)}}, {'Name': 'Bonus Vowels','Description':'Vowels are 3 pts, consonants are 1 pt.','scorerFunction':vbs = function(usrInp){return vowelBonusScorer(usrInp)}},{'Name':'Scrabble','Description':'The traditional scoring algorithm.','scorerFunction': nps = function(usrInp){return scrabbleScorer(usrInp)}}]
 
 function scorerPrompt() {
    let choice = -1;
@@ -107,13 +107,13 @@ function scorerPrompt() {
    while(choice < 0 || choice > 2) {
    choice = input.question(`Which scoring algorithm would you like to use?\n\n0 - ${scoringAlgorithms[0].Name}: ${scoringAlgorithms[0].Description}\n1 - ${scoringAlgorithms[1].Name}: ${scoringAlgorithms[1].Description}\n2 - ${scoringAlgorithms[2].Name}: ${scoringAlgorithms[2].Description}\nEnter 0, 1, or 2:`);
    if (choice === '0'){
-      console.log(`Score for \'${usrInp}\': ${scoringAlgorithms[0]['Score Function'](usrInp)}`);
+      console.log(`Score for \'${usrInp}\': ${scoringAlgorithms[0]['scorerFunction'](usrInp)}`);
       
    }else if (choice === '1'){
-      console.log(`Score for \'${usrInp}"\': ${scoringAlgorithms[1]['Score Function'](usrInp)}`);
+      console.log(`Score for \'${usrInp}"\': ${scoringAlgorithms[1]['scorerFunction'](usrInp)}`);
       
    }else if (choice === '2'){
-      console.log(`Score for \'${usrInp}"\': ${scoringAlgorithms[2]['Score Function'](usrInp)}`);
+      console.log(`Score for \'${usrInp}"\': ${scoringAlgorithms[2]['scorerFunction'](usrInp)}`);
       
    }else {
       console.log('Invalid choice! Please select 0, 1, or 2.');
@@ -133,7 +133,7 @@ function transform(oldPointStructure) {
 };
 
 let newPointStructure = transform(oldPointStructure);
-
+//console.log(newPointStructure)
 function runProgram() {
    scorerPrompt();
    
