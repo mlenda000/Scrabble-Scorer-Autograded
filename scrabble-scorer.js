@@ -47,7 +47,10 @@ let simpleScore = function(word){
    if (word === undefined){
       return
    }
-   let totalScore = word.length();
+   let totalScore = 0;
+   for(let i=0;i<temp.length;i++){
+   totalScore++
+   }
    
   return totalScore;   
 };
