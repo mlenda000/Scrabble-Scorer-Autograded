@@ -9,11 +9,15 @@ const oldPointStructure = {
   4: ['F', 'H', 'V', 'W', 'Y'],
   5: ['K'],
   8: ['J', 'X'],
-  10: ['Q', 'Z']
+  10: ['Q', 'Z'],
+  0: [' ']
 };
 
 function oldScrabbleScorer(word) {
-	word = word.toUpperCase();
+	if (word === undefined){
+      return
+   }
+   word = word.toUpperCase();
 	let letterPoints = "";
  
 	for (let i = 0; i < word.length; i++) {
@@ -41,6 +45,9 @@ return points;
 };
 
 let simpleScorer = function(word){
+   if (word === undefined){
+      return
+   }
    let totalScore = 0;
    let temp = word.toUpperCase().trim()
    for(i =0;i<temp.length;i++){
@@ -50,11 +57,14 @@ let simpleScorer = function(word){
 };
 
 let vowelBonusScorer = function(word){
+   if(word === undefined){
+      return
+   }
    totalScore = 0;
    let temp = word.toUpperCase().trim()
    for(let i=0;i<temp.length;i++){
        if(temp[i] === 'A' || temp[i] === 'E' || temp[i] === 'I' || temp[i] === 'O' || temp[i] === 'U'){
-           totalScore =+ 3;
+           totalScore += 3;
        }else{
            totalScore++;
        }
@@ -62,25 +72,49 @@ let vowelBonusScorer = function(word){
    return totalScore;
 };
 
-let scrabbleScorer;
-const scoringAlgorithms =[];
-// const scoringAlgorithms = [{'Name':'Simple Score','Description':'Each letter is worth 1 point.','Score Function':simpleScorer()}, {'Name': 'Bonus Vowels','Description':'Vowels are 3 pts, consonants are 1 pt.','Score Function':vowelBonusScorer()},{'Name':'Scrabble','Description':'The traditional scoring algorithm.','Score Function': oldScrabbleScorer()}]
+let scrabbleScorer = function(word){
+   if (word === undefined){
+      return
+   }
+   temp = word.toLowerCase();
+	let totalScore = 0;
+ 
+	for (let i = 0; i < temp.length; i++) {
+	  for (const item in newPointStructure) {
+		 if (item === temp[i]) {
+			totalScore += newPointStructure[temp[i]];
+		 }
+ 
+	  }
+	}
+	return totalScore;
+};
+
+const scoringAlgorithms = [{'Name':'Simple Score','Description':'Each letter is worth 1 point.','Score Function':ss = function(usrInp){return simpleScorer(usrInp)}}, {'Name': 'Bonus Vowels','Description':'Vowels are 3 pts, consonants are 1 pt.','Score Function':vbs = function(usrInp){return vowelBonusScorer(usrInp)}},{'Name':'Scrabble','Description':'The traditional scoring algorithm.','Score Function': nps = function(usrInp){return scrabbleScorer(usrInp)}}]
 
 function scorerPrompt() {
-   let choice;
-   console.log('Let\'s play some Scrabble!\n\n')
-   let usrInp = input.question('Enter a word to score:\t');
-   while(choice !== '0' || choice !== '1' || choice !== '2') {
-   choice = input.question('Which scoring algorithm would you like to use?\n\n0 - Simple: One point per character\n1 - Vowel Bonus: Vowels are worth 3 points\n2 - Scrabble: Uses scrabble point system\nEnter 0, 1, or 2:');
+   let choice = -1;
+   console.log('Let\'s play some Scrabble!\n');
+   let check = false;
+   while(!check){
+   
+   
+   usrInp = input.question('Enter a word to score:\t');
+   // let specialChars =/[`!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?~]/;
+
+   check = true;
+   }
+   while(choice < 0 || choice > 2) {
+   choice = input.question(`Which scoring algorithm would you like to use?\n\n0 - ${scoringAlgorithms[0].Name}: ${scoringAlgorithms[0].Description}\n1 - ${scoringAlgorithms[1].Name}: ${scoringAlgorithms[1].Description}\n2 - ${scoringAlgorithms[2].Name}: ${scoringAlgorithms[2].Description}\nEnter 0, 1, or 2:`);
    if (choice === '0'){
-      console.log(`Score for \'${usrInp}\': ${simpleScorer(usrInp)}`);
-      break
+      console.log(`Score for \'${usrInp}\': ${scoringAlgorithms[0]['Score Function'](usrInp)}`);
+      
    }else if (choice === '1'){
-      console.log(`Score for \'${usrInp}"\': ${vowelBonusScorer(usrInp)}`);
-      break
+      console.log(`Score for \'${usrInp}"\': ${scoringAlgorithms[1]['Score Function'](usrInp)}`);
+      
    }else if (choice === '2'){
-      console.log(`Score for \'${usrInp}"\': ${oldScrabbleScorer(usrInp)}`);
-      break
+      console.log(`Score for \'${usrInp}"\': ${scoringAlgorithms[2]['Score Function'](usrInp)}`);
+      
    }else {
       console.log('Invalid choice! Please select 0, 1, or 2.');
    }
@@ -88,16 +122,20 @@ function scorerPrompt() {
 
 }
 function transform(oldPointStructure) {
-  
-   return newPointStructure;
+  let newPoints = {};
+   for (item in oldPointStructure){
+      let ops = oldPointStructure[item];
+      for(i=0;i<ops.length;i++){
+         newPoints[ops[i].toLowerCase()] = Number(item);
+      }
+   }
+   return newPoints;
 };
 
-let newPointStructure = {
-   'A':1,'B':3,'C':3,'D':2,'E':1,'F':4,'G':2,'H':4,'I':1,'J':8,'K':5,'L':1,'M':3,'N':1,'O':1,'P':3,'Q':10,'R':1,'S':1,'T':1,'U':1,'V':4,'W':4,'X':8,'Y':4,'Z':10
-};
+let newPointStructure = transform(oldPointStructure);
 
 function runProgram() {
-   scorerPrompt()
+   scorerPrompt();
    
 }
 
