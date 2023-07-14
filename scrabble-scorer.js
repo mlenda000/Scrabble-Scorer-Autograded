@@ -47,11 +47,8 @@ let simpleScore = function(word){
    if (word === undefined){
       return
    }
-   let totalScore = 0;
-   let temp = word.toUpperCase().trim()
-   for(i =0;i<temp.length;i++){
-       totalScore++;
-   }
+   let totalScore = word.length();
+   
   return totalScore;   
 };
 
