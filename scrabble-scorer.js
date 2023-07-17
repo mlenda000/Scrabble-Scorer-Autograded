@@ -36,11 +36,13 @@ function oldScrabbleScorer(word) {
 // don't change the names or your program won't work as expected. //
 
 function initialPrompt() {
-   console.log("Let's play some scrabble!");
-   let word = input.question('Please enter a word\t');
-   points = oldScrabbleScorer(word);
-   console.log(points)
-return points;
+   console.log('Let\'s play some Scrabble!\n');
+   let check = false;
+   
+   usrInp = input.question('Enter a word to score:\t');
+   // let specialChars =/[`!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?~]/;
+
+return usrInp;
 };
 
 let simpleScore = function(word){
@@ -91,18 +93,8 @@ let scrabbleScore = function(word){
 
 const scoringAlgorithms = [{'Name':'Simple Score','Description':'Each letter is worth 1 point.','scorerFunction': simpleScorer = function(usrInp){return simpleScore(usrInp)}}, {'Name': 'Bonus Vowels','Description':'Vowels are 3 pts, consonants are 1 pt.','scorerFunction':vowelBonusScorer = function(usrInp){return vowelBonusScore(usrInp)}},{'Name':'Scrabble','Description':'The traditional scoring algorithm.','scorerFunction': scrabbleScorer = function(usrInp){return scrabbleScore(usrInp)}}]
 
-function scorerPrompt() {
-   let choice = -1;
-   console.log('Let\'s play some Scrabble!\n');
-   let check = false;
-   while(!check){
-   
-   
-   usrInp = input.question('Enter a word to score:\t');
-   // let specialChars =/[`!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?~]/;
-
-   check = true;
-   }
+function scorerPrompt(usrInp) {
+ let choice = -1;
    while(choice < 0 || choice > 2) {
    choice = input.question(`Which scoring algorithm would you like to use?\n\n0 - ${scoringAlgorithms[0].Name}: ${scoringAlgorithms[0].Description}\n1 - ${scoringAlgorithms[1].Name}: ${scoringAlgorithms[1].Description}\n2 - ${scoringAlgorithms[2].Name}: ${scoringAlgorithms[2].Description}\nEnter 0, 1, or 2:`);
    if (choice === '0'){
@@ -134,7 +126,7 @@ function transform(oldPointStructure) {
 let newPointStructure = transform(oldPointStructure);
 //console.log(newPointStructure)
 function runProgram() {
-   scorerPrompt();
+   scorerPrompt(initialPrompt());
    
 }
 
