@@ -96,18 +96,18 @@ const scoringAlgorithms = [{'Name':'Simple Score','Description':'Each letter is 
 function scorerPrompt(usrInp) {
  let choice = -1;
    while(choice < 0 || choice > 2) {
-   choice = input.question(`Which scoring algorithm would you like to use?\n\n0 - ${scoringAlgorithms[0].Name}: ${scoringAlgorithms[0].Description}\n1 - ${scoringAlgorithms[1].Name}: ${scoringAlgorithms[1].Description}\n2 - ${scoringAlgorithms[2].Name}: ${scoringAlgorithms[2].Description}\nEnter 0, 1, or 2:`);
+   choice = input.question(`Which scoring algorithm would you like to use?\n\n0 - ${scoringAlgorithms[0].Name}: ${scoringAlgorithms[0].Description}\n1 - ${scoringAlgorithms[1].Name}: ${scoringAlgorithms[1].Description}\n2 - ${scoringAlgorithms[2].Name}: ${scoringAlgorithms[2].Description}\nEnter 0, 1, or 2:\t`);
    if (choice === '0'){
       console.log(`Score for \'${usrInp}\': ${scoringAlgorithms[0]['scorerFunction'](usrInp)}`);
       
    }else if (choice === '1'){
-      console.log(`Score for \'${usrInp}"\': ${scoringAlgorithms[1]['scorerFunction'](usrInp)}`);
+      console.log(`Score for \'${usrInp}\': ${scoringAlgorithms[1]['scorerFunction'](usrInp)}`);
       
    }else if (choice === '2'){
-      console.log(`Score for \'${usrInp}"\': ${scoringAlgorithms[2]['scorerFunction'](usrInp)}`);
+      console.log(`Score for \'${usrInp}\': ${scoringAlgorithms[2]['scorerFunction'](usrInp)}`);
       
    }else {
-      console.log('Invalid choice! Please select 0, 1, or 2.');
+      console.log('Invalid choice! Please select 0, 1, or 2.\n');
    }
 }
 
